@@ -499,7 +499,7 @@ header.scrolled {
     align-items: center;
     gap: 0.5rem;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-    animation: float-node 6s infinite ease-in-out;
+    white-space: nowrap;
 }
 
 .floating-node svg {
@@ -507,19 +507,60 @@ header.scrolled {
     height: 16px;
 }
 
-.node-1 { top: -20px; left: 10px; animation-delay: 0s; }
-.node-2 { right: -10px; top: 80px; animation-delay: 1.5s; border-color: var(--secondary); }
-.node-3 { bottom: 10px; left: -30px; animation-delay: 3s; border-color: var(--accent); }
-.node-4 { bottom: -20px; right: 20px; animation-delay: 4.5s; }
+.node-1 {
+    animation: orbit-outer-1 30s linear infinite;
+}
+.node-2 {
+    border-color: var(--secondary);
+    animation: orbit-inner-1 24s linear infinite;
+}
+.node-3 {
+    border-color: var(--accent);
+    animation: orbit-outer-2 30s linear infinite;
+}
+.node-4 {
+    animation: orbit-inner-2 24s linear infinite;
+}
 
 @keyframes rotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-@keyframes float-node {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+@keyframes orbit-outer-1 {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) translateX(175px) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg) translateX(175px) rotate(-360deg);
+    }
+}
+
+@keyframes orbit-outer-2 {
+    0% {
+        transform: translate(-50%, -50%) rotate(180deg) translateX(175px) rotate(-180deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(540deg) translateX(175px) rotate(-540deg);
+    }
+}
+
+@keyframes orbit-inner-1 {
+    0% {
+        transform: translate(-50%, -50%) rotate(90deg) translateX(125px) rotate(-90deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(-270deg) translateX(125px) rotate(270deg);
+    }
+}
+
+@keyframes orbit-inner-2 {
+    0% {
+        transform: translate(-50%, -50%) rotate(270deg) translateX(125px) rotate(-270deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(-90deg) translateX(125px) rotate(90deg);
+    }
 }
 
 /* About / Stats Section */
