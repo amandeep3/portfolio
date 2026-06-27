@@ -451,6 +451,9 @@ header.scrolled {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 380px;
+    height: 380px;
+    margin: 0 auto;
 }
 
 .tech-ring {
@@ -489,6 +492,8 @@ header.scrolled {
 
 .floating-node {
     position: absolute;
+    top: 50%;
+    left: 50%;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     padding: 0.6rem 1.2rem;
