@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     // 3. Typewriter Effect
-    const roles = ["Lead Software Engineer", "5G OAM Developer", "Cloud-Native Engineer", "C++ Developer"];
+    const roles = ["Senior / Lead Software Engineer", "C++ Systems Engineer", "5G OAM Engineer", "Cloud-Native Platform Engineer"];
     let currentRoleIdx = 0;
     let currentCharIdx = 0;
     let isDeleting = false;
