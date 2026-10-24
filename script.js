@@ -65,7 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(type, currentDelay);
     }
 
-    if (typedTextEl) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (typedTextEl && reducedMotion.matches) {
+        typedTextEl.textContent = roles[0];
+    } else if (typedTextEl) {
         setTimeout(type, 500);
     }
 
@@ -209,3 +212,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Pointer-driven depth is limited to devices with a precise hover pointer.
+(() => {
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const pointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const cards = document.querySelectorAll('.project-card, .skill-category-card, .stat-box, .cert-card');
+    cards.forEach(card => card.classList.add('spatial-card'));
+    const scene = document.querySelector('.hero-graphic');
+    [...cards, scene].filter(Boolean).forEach(surface => {
+        let frame = 0;
+        const reset = () => {
+            cancelAnimationFrame(frame);
+            ['--tilt-x', '--tilt-y', '--scene-x', '--scene-y', '--light-x', '--light-y'].forEach(name => surface.style.removeProperty(name));
+        };
+        surface.addEventListener('pointermove', event => {
+            if (motion.matches || !pointer.matches) return;
+            cancelAnimationFrame(frame);
+            frame = requestAnimationFrame(() => {
+                const rect = surface.getBoundingClientRect();
+                const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+                const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+                const prefix = surface === scene ? '--scene-' : '--tilt-';
+                surface.style.setProperty(prefix + 'x', `${(0.5 - y) * 8}deg`);
+                surface.style.setProperty(prefix + 'y', `${(x - 0.5) * 8}deg`);
+                surface.style.setProperty('--light-x', `${x * 100}%`);
+                surface.style.setProperty('--light-y', `${y * 100}%`);
+            });
+        });
+        surface.addEventListener('pointerleave', reset);
+        motion.addEventListener('change', reset);
+        pointer.addEventListener('change', reset);
+    });
+})();
